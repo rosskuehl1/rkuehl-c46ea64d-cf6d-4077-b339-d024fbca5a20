@@ -1,0 +1,68 @@
+<section class="login-card" data-testid="login-card">
+  <h1>Sign in</h1>
+  <p class="subtitle">Use your account credentials to access the dashboard.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div
+      class="field"
+      [class.invalid]="emailControl.touched && emailControl.invalid"
+    >
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        autocomplete="username"
+        [attr.aria-invalid]="emailControl.invalid && emailControl.touched"
+        [attr.aria-describedby]="
+          emailControl.invalid && emailControl.touched ? 'email-error' : null
+        "
+      />
+      <p
+        class="error"
+        *ngIf="emailControl.touched && emailControl.hasError('required')"
+        id="email-error"
+      >
+        Email is required.
+      </p>
+      <p
+        class="error"
+        *ngIf="emailControl.touched && emailControl.hasError('email')"
+      >
+        Enter a valid email address.
+      </p>
+    </div>
+
+    <div
+      class="field"
+      [class.invalid]="passwordControl.touched && passwordControl.invalid"
+    >
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        [attr.aria-invalid]="passwordControl.invalid && passwordControl.touched"
+        [attr.aria-describedby]="
+          passwordControl.invalid && passwordControl.touched
+            ? 'password-error'
+            : null
+        "
+      />
+      <p
+        class="error"
+        *ngIf="passwordControl.touched && passwordControl.hasError('required')"
+        id="password-error"
+      >
+        Password is required.
+      </p>
+    </div>
+
+    <button type="submit" [disabled]="submitting() || form.invalid">
+      {{ submitting() ? 'Signing in…' : 'Sign in' }}
+    </button>
+  </form>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+</section>
